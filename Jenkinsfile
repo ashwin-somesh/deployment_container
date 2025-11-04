@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     DOCKERHUB = credentials('dockerhub')
-    IMAGE = "ashwin/myapp"
+    IMAGE = "ashwinsomesh/myapp"
   }
 
   stages {
