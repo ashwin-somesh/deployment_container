@@ -34,11 +34,13 @@ pipeline {
     stage("Deploy to K8s") {
   steps {
     sh """
-    kubectl apply -f k8s-deployment.yaml
+    kubectl config use-context minikube
+    kubectl apply -f k8s-deployment.yaml --validate=false
     kubectl set image deployment/myapp myapp=$IMAGE:${BUILD_NUMBER} --record=true
     """
   }
 }
+
 
     // stage("Deploy Container") {
       // steps {
