@@ -32,15 +32,15 @@ pipeline {
     }
 
     stage("Deploy to K8s") {
-      steps {
-        sh """
-        export KUBECONFIG=/var/lib/jenkins/.kube/config
-        kubectl config use-context minikube
-        kubectl apply -f k8s-deployment.yaml --validate=false
-        kubectl set image deployment/myapp myapp=$IMAGE:${BUILD_NUMBER} --record=true
-        """
-      }
-    }
+  steps {
+    sh """
+    export KUBECONFIG=/var/lib/jenkins/.kube/config
+    kubectl apply -f k8s-deployment.yaml --validate=false
+    kubectl set image deployment/myapp myapp=$IMAGE:${BUILD_NUMBER} --record=true
+    """
+  }
+}
+
 
     
     // stage("Deploy Container") {
