@@ -31,11 +31,21 @@ pipeline {
       }
     }
 
-    stage("Deploy Container") {
-      steps {
-        sh "docker rm -f myapp || true"
-        sh "docker run -d --name myapp -p 9090:80 $IMAGE:${BUILD_NUMBER}"
-      }
-    }
+    stage("Deploy to K8s") {
+  steps {
+    sh """
+    kubectl apply -f k8s-deployment.yaml
+    kubectl set image deployment/myapp myapp=$IMAGE:${BUILD_NUMBER} --record=true
+    """
+  }
+}
+
+    // stage("Deploy Container") {
+      // steps {
+        // sh "docker rm -f myapp || true"
+        // sh "docker run -d --name myapp -p 9090:80 $IMAGE:${BUILD_NUMBER}"
+      // }
+    // }
+    
   }
 }
